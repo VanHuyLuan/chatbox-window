@@ -1,0 +1,102 @@
+<div class="chat-wrapper">
+  <div class="chat-widget-container" *ngIf="isChatVisible">
+    <!-- Chat Window -->
+    <div class="chat-window">
+      <!-- Header -->
+      <div class="chat-header">
+        <div class="header-content">
+          <img
+            src="https://cahn.mobifone.vn/assets/img/logo-ai1.png"
+            class="avatar"
+            alt="Assistant Avatar"
+          />
+          <div class="assistant-info">
+            <h3 class="assistant-name">Trợ lý ảo Moocs</h3>
+            <div class="status-indicator">
+              <span class="status-dot"></span>
+              <span class="status-text"> Online </span>
+            </div>
+          </div>
+        </div>
+        <button (click)="toggleChat()" class="close-chat-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <div class="chat-messages">
+        <p class="bot-message initial-message">
+          Xin chào, tôi có thể giúp gì cho bạn?
+        </p>
+
+        <div *ngFor="let message of messages" class="message-container">
+          <div
+            class="message"
+            [ngClass]="{
+              'user-message': message.sender === 'user',
+              'bot-message': message.sender === 'bot'
+            }"
+          >
+            {{ message.text }}
+          </div>
+        </div>
+
+        <div *ngIf="isLoading" class="loading-dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <div #scrollTarget></div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input">
+        <input
+          [(ngModel)]="newMessage"
+          [ngModelOptions]="{ standalone: true }"
+          (keydown.enter)="sendMessage()"
+          type="text"
+          class="message-input"
+          placeholder="Gửi tin nhắn ..."
+        />
+        <button class="send-button" (click)="sendMessage()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m3 3 3 9-3 9 19-9Z"></path>
+            <path d="M6 12h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Media Icons - Always visible -->
+  <div class="social-icons">
+    <a href="#" class="social-icon chatbox" (click)="toggleChat()">
+      <img src="https://cahn.mobifone.vn/assets/img/chatbox.png" alt="Chat" />
+    </a>
+  </div>
+</div>
